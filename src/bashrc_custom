@@ -1,0 +1,26 @@
+export TERM=xterm-256color
+PS1='\[\033[38;5;39m\]\u\[\033[0m\]@\[\033[38;5;250m\]\h \[\033[38;5;245m\]› \[\033[1;32m\]\w\[\033[0m\] \$ '
+CYAN="\033[38;5;39m"
+GREEN="\033[1;32m"
+GRAY="\033[38;5;245m"
+YELLOW="\033[38;5;214m"
+RESET="\033[0m"
+USER_NAME="$(whoami)"
+HOST_NAME="$(hostname)"
+KERNEL="$(uname -r)"
+SHELL_NAME="$(basename "$SHELL")"
+TERM_NAME="$TERM"
+LOCAL_IP="$(ip route get 1.1.1.1 2>/dev/null | awk '{print $7; exit}')"
+PUBLIC_IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+
+echo -e "${CYAN}${USER_NAME}${RESET}@${GRAY}${HOST_NAME}${RESET}"
+echo
+echo -e "${GRAY}-----------------------------${RESET}"
+printf "${GREEN}OS:${RESET}        Kali Linux\n"
+printf "${GREEN}Kernel:${RESET}    %s\n" "$KERNEL"
+printf "${GREEN}Username:${RESET}  %s\n" "$USER_NAME"
+printf "${GREEN}Shell:${RESET}     %s\n" "$SHELL_NAME"
+printf "${GREEN}Terminal:${RESET}  %s\n" "$TERM_NAME"
+printf "${GREEN}Local IP:${RESET}  %s\n" "${LOCAL_IP:-N/A}"
+printf "${GREEN}Public IP:${RESET} %s\n" "$PUBLIC_IP"
+echo

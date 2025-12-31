@@ -1,0 +1,39 @@
+services:
+  protonvpn:
+    container_name: protonvpn
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      VPN_SERVICE_PROVIDER: protonvpn
+      OPENVPN_USER: ${PROTONVPN_USERNAME}
+      OPENVPN_PASSWORD: ${PROTONVPN_PASSWORD}
+      VPN_TYPE: openvpn
+
+  kali-bootstrap:
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        USERNAME: ${USERNAME}
+        UID: 1000
+        GID: 1000
+    environment:
+      GIT_REPOS: >
+        "https://github.com/berandal666/Passwords.git"
+        "https://github.com/danielmiessler/SecLists.git"
+      TZ: ETC
+    network_mode: service:protonvpn
+    depends_on:
+      - protonvpn
+    image: kali-bootstrap:latest
+    container_name: kali-bootstrap
+    tty: true
+    volumes:
+      - ~/dev/container-storage/kali-bootstrap:/home/${USERNAME}/lists
+    #   - /var/run/docker.sock:/var/run/docker.sock
+    #   - /usr/bin/docker:/usr/bin/docker
+    restart: unless-stopped
