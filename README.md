@@ -51,6 +51,7 @@ On container startup, repositories defined via environment variables are automat
 ### Highlighted Features
 
 - 🔒 **Full VPN isolation**
+- 🔨 **Includes the full Kali-linux tool-set**
 - 🧰 **Automatic repo bootstrap**
 - 📦 **Persistent storage**
 - 🐳 **Docker-native**

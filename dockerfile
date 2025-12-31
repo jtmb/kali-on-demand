@@ -27,7 +27,6 @@ RUN groupadd -g ${GID} ${USERNAME} \
  # Create directories
  && mkdir -p /home/${USERNAME}/.ssh \
  && mkdir -p /home/${USERNAME}/.secrets \
- && mkdir -p /home/${USERNAME}/repos \
  && mkdir -p /home/${USERNAME}/lists \
  && mkdir -p /app \
  # Set ownership
